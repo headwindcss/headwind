@@ -1,0 +1,257 @@
+import type { UtilityRule } from './rules'
+
+// Typography utilities
+
+export const fontFamilyRule: UtilityRule = (parsed, config) => {
+  if (parsed.utility === 'font' && parsed.value) {
+    const family = config.theme.fontFamily[parsed.value]
+    if (family) {
+      return { 'font-family': family.join(', ') }
+    }
+  }
+}
+
+export const fontSmoothingRule: UtilityRule = (parsed) => {
+  const values: Record<string, Record<string, string>> = {
+    antialiased: {
+      '-webkit-font-smoothing': 'antialiased',
+      '-moz-osx-font-smoothing': 'grayscale',
+    },
+    'subpixel-antialiased': {
+      '-webkit-font-smoothing': 'auto',
+      '-moz-osx-font-smoothing': 'auto',
+    },
+  }
+  return values[parsed.raw]
+}
+
+export const fontStyleRule: UtilityRule = (parsed) => {
+  const styles: Record<string, string> = {
+    italic: 'italic',
+    'not-italic': 'normal',
+  }
+  return styles[parsed.raw] ? { 'font-style': styles[parsed.raw] } : undefined
+}
+
+export const fontStretchRule: UtilityRule = (parsed) => {
+  if (parsed.utility === 'font-stretch') {
+    const stretches = ['ultra-condensed', 'extra-condensed', 'condensed', 'semi-condensed', 'normal', 'semi-expanded', 'expanded', 'extra-expanded', 'ultra-expanded']
+    return parsed.value && stretches.includes(parsed.value) ? { 'font-stretch': parsed.value } : undefined
+  }
+}
+
+export const fontVariantNumericRule: UtilityRule = (parsed) => {
+  const variants: Record<string, string> = {
+    'normal-nums': 'normal',
+    ordinal: 'ordinal',
+    'slashed-zero': 'slashed-zero',
+    'lining-nums': 'lining-nums',
+    'oldstyle-nums': 'oldstyle-nums',
+    'proportional-nums': 'proportional-nums',
+    'tabular-nums': 'tabular-nums',
+    'diagonal-fractions': 'diagonal-fractions',
+    'stacked-fractions': 'stacked-fractions',
+  }
+  return variants[parsed.raw] ? { 'font-variant-numeric': variants[parsed.raw] } : undefined
+}
+
+export const letterSpacingRule: UtilityRule = (parsed) => {
+  if (parsed.utility === 'tracking') {
+    const values: Record<string, string> = {
+      tighter: '-0.05em',
+      tight: '-0.025em',
+      normal: '0em',
+      wide: '0.025em',
+      wider: '0.05em',
+      widest: '0.1em',
+    }
+    return parsed.value ? { 'letter-spacing': values[parsed.value] || parsed.value } : undefined
+  }
+}
+
+export const lineClampRule: UtilityRule = (parsed) => {
+  if (parsed.utility === 'line-clamp' && parsed.value) {
+    return {
+      overflow: 'hidden',
+      display: '-webkit-box',
+      '-webkit-box-orient': 'vertical',
+      '-webkit-line-clamp': parsed.value,
+    }
+  }
+}
+
+export const listStyleImageRule: UtilityRule = (parsed) => {
+  if (parsed.utility === 'list-image' && parsed.value) {
+    return { 'list-style-image': parsed.value === 'none' ? 'none' : `url(${parsed.value})` }
+  }
+}
+
+export const listStylePositionRule: UtilityRule = (parsed) => {
+  const positions: Record<string, string> = {
+    'list-inside': 'inside',
+    'list-outside': 'outside',
+  }
+  return positions[parsed.raw] ? { 'list-style-position': positions[parsed.raw] } : undefined
+}
+
+export const listStyleTypeRule: UtilityRule = (parsed) => {
+  if (parsed.utility === 'list') {
+    const types: Record<string, string> = {
+      none: 'none',
+      disc: 'disc',
+      decimal: 'decimal',
+    }
+    return parsed.value ? { 'list-style-type': types[parsed.value] || parsed.value } : undefined
+  }
+}
+
+export const textDecorationRule: UtilityRule = (parsed) => {
+  const decorations: Record<string, string> = {
+    underline: 'underline',
+    overline: 'overline',
+    'line-through': 'line-through',
+    'no-underline': 'none',
+  }
+  if (decorations[parsed.raw]) {
+    return { 'text-decoration-line': decorations[parsed.raw] }
+  }
+
+  if (parsed.utility === 'decoration' && parsed.value) {
+    const styles: Record<string, string> = {
+      solid: 'solid',
+      double: 'double',
+      dotted: 'dotted',
+      dashed: 'dashed',
+      wavy: 'wavy',
+    }
+    return { 'text-decoration-style': styles[parsed.value] || parsed.value }
+  }
+
+  return undefined
+}
+
+export const textTransformRule: UtilityRule = (parsed) => {
+  const transforms: Record<string, string> = {
+    uppercase: 'uppercase',
+    lowercase: 'lowercase',
+    capitalize: 'capitalize',
+    'normal-case': 'none',
+  }
+  return transforms[parsed.raw] ? { 'text-transform': transforms[parsed.raw] } : undefined
+}
+
+export const textOverflowRule: UtilityRule = (parsed) => {
+  const overflows: Record<string, Record<string, string>> = {
+    truncate: {
+      overflow: 'hidden',
+      'text-overflow': 'ellipsis',
+      'white-space': 'nowrap',
+    },
+    'text-ellipsis': { 'text-overflow': 'ellipsis' },
+    'text-clip': { 'text-overflow': 'clip' },
+  }
+  return overflows[parsed.raw]
+}
+
+export const textWrapRule: UtilityRule = (parsed) => {
+  const wraps: Record<string, string> = {
+    'text-wrap': 'wrap',
+    'text-nowrap': 'nowrap',
+    'text-balance': 'balance',
+    'text-pretty': 'pretty',
+  }
+  return wraps[parsed.raw] ? { 'text-wrap': wraps[parsed.raw] } : undefined
+}
+
+export const textIndentRule: UtilityRule = (parsed, config) => {
+  if (parsed.utility === 'indent' && parsed.value) {
+    return { 'text-indent': config.theme.spacing[parsed.value] || parsed.value }
+  }
+}
+
+export const verticalAlignRule: UtilityRule = (parsed) => {
+  const aligns: Record<string, string> = {
+    'align-baseline': 'baseline',
+    'align-top': 'top',
+    'align-middle': 'middle',
+    'align-bottom': 'bottom',
+    'align-text-top': 'text-top',
+    'align-text-bottom': 'text-bottom',
+    'align-sub': 'sub',
+    'align-super': 'super',
+  }
+  return aligns[parsed.raw] ? { 'vertical-align': aligns[parsed.raw] } : undefined
+}
+
+export const whiteSpaceRule: UtilityRule = (parsed) => {
+  const spaces: Record<string, string> = {
+    'whitespace-normal': 'normal',
+    'whitespace-nowrap': 'nowrap',
+    'whitespace-pre': 'pre',
+    'whitespace-pre-line': 'pre-line',
+    'whitespace-pre-wrap': 'pre-wrap',
+    'whitespace-break-spaces': 'break-spaces',
+  }
+  return spaces[parsed.raw] ? { 'white-space': spaces[parsed.raw] } : undefined
+}
+
+export const wordBreakRule: UtilityRule = (parsed) => {
+  const breaks: Record<string, string> = {
+    'break-normal': 'normal',
+    'break-words': 'break-word',
+    'break-all': 'break-all',
+    'break-keep': 'keep-all',
+  }
+  return breaks[parsed.raw] ? { 'word-break': breaks[parsed.raw] } : undefined
+}
+
+export const overflowWrapRule: UtilityRule = (parsed) => {
+  const wraps: Record<string, string> = {
+    'overflow-wrap-normal': 'normal',
+    'overflow-wrap-break': 'break-word',
+    'overflow-wrap-anywhere': 'anywhere',
+  }
+  return wraps[parsed.raw] ? { 'overflow-wrap': wraps[parsed.raw] } : undefined
+}
+
+export const hyphensRule: UtilityRule = (parsed) => {
+  const values: Record<string, string> = {
+    'hyphens-none': 'none',
+    'hyphens-manual': 'manual',
+    'hyphens-auto': 'auto',
+  }
+  return values[parsed.raw] ? { hyphens: values[parsed.raw] } : undefined
+}
+
+export const contentRule: UtilityRule = (parsed) => {
+  if (parsed.utility === 'content' && parsed.value) {
+    const values: Record<string, string> = {
+      none: 'none',
+    }
+    return { content: values[parsed.value] || `"${parsed.value}"` }
+  }
+}
+
+export const typographyRules: UtilityRule[] = [
+  fontFamilyRule,
+  fontSmoothingRule,
+  fontStyleRule,
+  fontStretchRule,
+  fontVariantNumericRule,
+  letterSpacingRule,
+  lineClampRule,
+  listStyleImageRule,
+  listStylePositionRule,
+  listStyleTypeRule,
+  textDecorationRule,
+  textTransformRule,
+  textOverflowRule,
+  textWrapRule,
+  textIndentRule,
+  verticalAlignRule,
+  whiteSpaceRule,
+  wordBreakRule,
+  overflowWrapRule,
+  hyphensRule,
+  contentRule,
+]
