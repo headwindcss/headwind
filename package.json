@@ -1,0 +1,59 @@
+{
+  "name": "headwind",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Like our `ts-starter`, but optimized for monorepos.",
+  "author": "Chris Breuer <chris@stacksjs.org>",
+  "license": "MIT",
+  "homepage": "https://github.com/stacksjs/headwind#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stacksjs/headwind.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stacksjs/headwind/issues"
+  },
+  "keywords": [
+    "monorepo",
+    "ts-starter",
+    "headwind",
+    "template"
+  ],
+  "scripts": {
+    "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
+    "test": "bun test",
+    "lint": "bunx --bun eslint .",
+    "lint:fix": "bunx --bun eslint . --fix",
+    "changelog": "bunx logsmith --verbose",
+    "changelog:generate": "bunx logsmith --output CHANGELOG.md",
+    "release": "bun run changelog:generate && bunx bumpx prompt --recursive",
+    "postinstall": "bunx git-hooks",
+    "dev:docs": "bun --bun vitepress dev docs",
+    "build:docs": "bun --bun vitepress build docs",
+    "preview:docs": "bun --bun vitepress preview docs",
+    "typecheck": "bun --bun tsc --noEmit"
+  },
+  "devDependencies": {
+    "@stacksjs/bumpx": "^0.1.84",
+    "@stacksjs/docs": "^0.70.23",
+    "@stacksjs/eslint-config": "^4.14.0-beta.3",
+    "@stacksjs/gitlint": "^0.1.5",
+    "@stacksjs/logsmith": "^0.1.18",
+    "@types/bun": "^1.2.23",
+    "buddy-bot": "^0.9.7",
+    "bun-git-hooks": "^0.2.19",
+    "bun-plugin-dtsx": "^0.21.12",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "unconfig": "0.3.10"
+  },
+  "git-hooks": {
+    "pre-commit": {
+      "staged-lint": {
+        "*.{js,ts,json,yaml,yml,md}": "bunx --bun eslint --fix"
+      }
+    },
+    "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
+  }
+}
