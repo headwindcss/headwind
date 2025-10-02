@@ -62,7 +62,7 @@
     "test": "bun test"
   },
   "devDependencies": {
-    "bunfig": "^0.10.1"
+    "bunfig": "^0.15.0"
   },
   "overrides": {
     "unconfig": "0.3.10"
