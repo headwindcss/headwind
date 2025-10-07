@@ -1,8 +1,8 @@
 {
   "name": "headwind",
   "type": "module",
-  "version": "0.0.0",
-  "description": "Like our `ts-starter`, but optimized for monorepos.",
+  "version": "0.1.1",
+  "description": "A performant Utility-First CSS framework. Similar to Tailwind or UnoCSS.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
   "homepage": "https://github.com/stacksjs/headwind#readme",
@@ -15,19 +15,18 @@
   },
   "keywords": [
     "monorepo",
-    "ts-starter",
     "headwind",
     "template"
   ],
   "scripts": {
+    "build": "cd packages/headwind && bun run build",
     "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
     "test": "bun test",
     "lint": "bunx --bun eslint .",
     "lint:fix": "bunx --bun eslint . --fix",
     "changelog": "bunx logsmith --verbose",
     "changelog:generate": "bunx logsmith --output CHANGELOG.md",
-    "release": "bun run changelog:generate && bunx bumpx prompt --recursive",
-    "postinstall": "bunx git-hooks",
+    "release": "bun run changelog:generate && bunx bumpx -r",
     "dev:docs": "bun --bun vitepress dev docs",
     "build:docs": "bun --bun vitepress build docs",
     "preview:docs": "bun --bun vitepress preview docs",
@@ -42,7 +41,7 @@
     "@types/bun": "^1.2.23",
     "buddy-bot": "^0.9.8",
     "bun-git-hooks": "^0.3.1",
-    "bun-plugin-dtsx": "^0.21.12",
+    "bun-plugin-dtsx": "0.21.12",
     "typescript": "^5.9.3"
   },
   "overrides": {
@@ -55,5 +54,8 @@
       }
     },
     "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
