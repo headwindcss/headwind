@@ -1,8 +1,8 @@
 {
-  "name": "headwind",
+  "name": "@stacksjs/headwind",
   "type": "module",
-  "version": "0.0.0",
-  "description": "A blazingly fast, utility-first CSS framework built with Bun. Generates only the CSS you need by scanning your files for utility classes.",
+  "version": "0.1.3",
+  "description": "A performant Utility-First CSS framework. Similar to Tailwind or UnoCSS.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
   "homepage": "https://github.com/stacksjs/headwind#readme",
@@ -45,20 +45,21 @@
   ],
   "scripts": {
     "build": "bun --bun build.ts && bun run compile",
-    "compile": "bun build ./bin/cli.ts --compile --minify --outfile bin/bin-name",
+    "compile": "bun build ./bin/cli.ts --compile --minify --outfile bin/headwind",
     "compile:all": "bun run compile:linux-x64 && bun run compile:linux-arm64 && bun run compile:windows-x64 && bun run compile:darwin-x64 && bun run compile:darwin-arm64",
-    "compile:linux-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-linux-x64 --outfile bin/bin-name-linux-x64",
-    "compile:linux-arm64": "bun build ./bin/cli.ts --compile --minify --target=bun-linux-arm64 --outfile bin/bin-name-linux-arm64",
-    "compile:windows-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-windows-x64 --outfile bin/bin-name-windows-x64.exe",
-    "compile:darwin-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-x64 --outfile bin/bin-name-darwin-x64",
-    "compile:darwin-arm64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-arm64 --outfile bin/bin-name-darwin-arm64",
+    "compile:linux-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-linux-x64 --outfile bin/headwind-linux-x64",
+    "compile:linux-arm64": "bun build ./bin/cli.ts --compile --minify --target=bun-linux-arm64 --outfile bin/headwind-linux-arm64",
+    "compile:windows-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-windows-x64 --outfile bin/headwind-windows-x64.exe",
+    "compile:darwin-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-x64 --outfile bin/headwind-darwin-x64",
+    "compile:darwin-arm64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-arm64 --outfile bin/headwind-darwin-arm64",
     "zip": "bun run zip:all",
     "zip:all": "bun run zip:linux-x64 && bun run zip:linux-arm64 && bun run zip:windows-x64 && bun run zip:darwin-x64 && bun run zip:darwin-arm64",
-    "zip:linux-x64": "zip -j bin/bin-name-linux-x64.zip bin/bin-name-linux-x64",
-    "zip:linux-arm64": "zip -j bin/bin-name-linux-arm64.zip bin/bin-name-linux-arm64",
-    "zip:windows-x64": "zip -j bin/bin-name-windows-x64.zip bin/bin-name-windows-x64.exe",
-    "zip:darwin-x64": "zip -j bin/bin-name-darwin-x64.zip bin/bin-name-darwin-x64",
-    "zip:darwin-arm64": "zip -j bin/bin-name-darwin-arm64.zip bin/bin-name-darwin-arm64",
+    "zip:linux-x64": "zip -j bin/headwind-linux-x64.zip bin/headwind-linux-x64",
+    "zip:linux-arm64": "zip -j bin/headwind-linux-arm64.zip bin/headwind-linux-arm64",
+    "zip:windows-x64": "zip -j bin/headwind-windows-x64.zip bin/headwind-windows-x64.exe",
+    "zip:darwin-x64": "zip -j bin/headwind-darwin-x64.zip bin/headwind-darwin-x64",
+    "zip:darwin-arm64": "zip -j bin/headwind-darwin-arm64.zip bin/headwind-darwin-arm64",
+    "benchmark": "bun run benchmark/framework-comparison.bench.ts",
     "lint": "bunx --bun eslint .",
     "lint:fix": "bunx --bun eslint . --fix",
     "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
@@ -67,7 +68,8 @@
     "release": "bun run changelog && bunx bumpp package.json --all",
     "test": "bun test"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@stacksjs/clapp": "^0.2.0",
     "bunfig": "^0.15.0"
   },
   "overrides": {
@@ -76,7 +78,15 @@
   "lint-staged": {
     "*.{js,ts}": "bunx --bun eslint . --fix"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "devDependencies": {
+    "@tailwindcss/node": "^4.1.15",
+    "@tailwindcss/postcss": "^4.1.15",
+    "@tailwindcss/vite": "^4.1.15",
+    "@unocss/core": "^66.5.4",
+    "@unocss/preset-wind": "^66.5.4",
+    "mitata": "^1.0.34",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3",
+    "tailwindcss-v4": "npm:tailwindcss@^4"
+  }
 }
