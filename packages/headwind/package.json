@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "@stacksjs/clapp": "^0.2.0",
-    "bunfig": "^0.15.4"
+    "bunfig": "^0.15.5"
   },
   "overrides": {
     "unconfig": "0.3.10"
