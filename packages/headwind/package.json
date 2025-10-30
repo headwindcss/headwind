@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "@stacksjs/clapp": "^0.2.0",
-    "bunfig": "^0.15.0"
+    "bunfig": "^0.15.6"
   },
   "overrides": {
     "unconfig": "0.3.10"
@@ -79,9 +79,9 @@
     "*.{js,ts}": "bunx --bun eslint . --fix"
   },
   "devDependencies": {
-    "@tailwindcss/node": "^4.1.14",
-    "@tailwindcss/postcss": "^4.1",
-    "@tailwindcss/vite": "^4.1",
+    "@tailwindcss/node": "^4.1.16",
+    "@tailwindcss/postcss": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.16",
     "@unocss/core": "^66.5.4",
     "@unocss/preset-wind": "^66.5.4",
     "mitata": "^1.0.34",
