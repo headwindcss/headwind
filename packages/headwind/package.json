@@ -81,7 +81,7 @@
   "devDependencies": {
     "@tailwindcss/node": "^4.1.18",
     "@tailwindcss/postcss": "^4.1.18",
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "@unocss/core": "^66.5.10",
     "@unocss/preset-wind": "^66.5.10",
     "mitata": "^1.0.34",
