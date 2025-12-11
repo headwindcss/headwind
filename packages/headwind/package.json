@@ -79,8 +79,8 @@
     "*.{js,ts}": "bunx --bun eslint . --fix"
   },
   "devDependencies": {
-    "@tailwindcss/node": "^4.1.17",
-    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/node": "^4.1.18",
+    "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.1.17",
     "@unocss/core": "^66.5.10",
     "@unocss/preset-wind": "^66.5.10",
