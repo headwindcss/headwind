@@ -1,13 +1,10 @@
 name: Publish to NPM
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Dry run (do not actually publish)'
-        required: false
-        default: true
-        type: boolean
 
 jobs:
   publish:
@@ -52,20 +49,7 @@ jobs:
           zig build
           echo "$PWD/zig-out/bin" >> $GITHUB_PATH
 
-      - name: Verify pantry
-        run: pantry --version
-
-      # TODO: Add build step (tsup/esbuild) once bun is removed
-      # - name: Build
-      #   run: npx tsup src/index.ts --format esm,cjs --dts
-      #   working-directory: packages/headwind
-
-      - name: Publish (Dry Run)
-        if: ${{ inputs.dry_run == true }}
-        run: pantry publish --dry-run --access public
-        working-directory: packages/headwind
-
       - name: Publish
-        if: ${{ inputs.dry_run == false }}
         run: pantry publish --access public
-        working-directory: packages/headwind
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
